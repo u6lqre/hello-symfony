@@ -11,6 +11,6 @@ class GreetingsController extends AbstractController
   #[Route('/helloworld')]
   public function show(): Response
   {
-    return $this->render("hola mundo");
+    return $this->render("greetings/show.html.twig");
   }
 }
