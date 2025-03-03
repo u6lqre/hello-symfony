@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Repository\PageAccessRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -10,12 +12,18 @@ use Symfony\Component\Routing\Attribute\Route;
 class GreetingsController extends AbstractController
 {
   #[Route('/helloworld')]
-  public function show(PageAccessRepository $repository): Response
+  public function show(PageAccessRepository $repository, EntityManagerInterface $entity_manager): Response
   {
-    $last_visit = $repository->getLastAccess();
+    try {
+      $last_access = $repository->getLastAccess();
+    } catch (Exception $e) {
+      $last_access = null;
+    }
+
+    $repository->createNewAccess($entity_manager);
 
     return $this->render("greetings/show.html.twig", [
-      "last_visit" => $last_visit
+      "last_access" => $last_access
     ]);
   }
 }
