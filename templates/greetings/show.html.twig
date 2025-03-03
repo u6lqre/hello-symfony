@@ -4,8 +4,10 @@
 
 {% block body %}
   <p>Hola mundo! 
-  {% if last_access %}
-      Tu última visita fue: {{ last_access}}
+  {% if formattedDate %}
+      Tu última visita fue el {{ formattedDate.day }} 
+      de {{ formattedDate.month }} del año {{ formattedDate.year }}
+      a las {{ formattedDate.hour }} 
   {% endif %}
   </p>
 {% endblock %} 
