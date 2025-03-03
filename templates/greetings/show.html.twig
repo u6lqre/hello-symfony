@@ -3,5 +3,9 @@
 {% block title %}Hello World{% endblock %}
 
 {% block body %}
-  <p>Hola mundo! Tu última visita fue: {{ last_visit }}</p>
-{% endblock %}
+  <p>Hola mundo! 
+  {% if last_access %}
+      Tu última visita fue: {{ last_access}}
+  {% endif %}
+  </p>
+{% endblock %} 
