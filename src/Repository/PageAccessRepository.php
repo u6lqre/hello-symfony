@@ -14,7 +14,7 @@ class PageAccessRepository extends ServiceEntityRepository
         parent::__construct($registry, PageAccess::class);
     }
 
-    public function getLastAccess(): ?PageAccess
+    public function getLastAccess()
     {
         return $this->createQueryBuilder('a')
             ->select('a.last_access')
@@ -28,8 +28,8 @@ class PageAccessRepository extends ServiceEntityRepository
     {
         $page_access = new PageAccess();
 
-        $current_date = new \DateTime();
-        $page_access->setLastAccess($current_date);
+        $date_time = new \DateTime();
+        $page_access->setLastAccess($date_time);
 
         $entity_manager->persist($page_access);
         $entity_manager->flush();
