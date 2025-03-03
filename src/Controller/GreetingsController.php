@@ -19,7 +19,7 @@ class GreetingsController extends AbstractController
       $lastAccess = $repository->getLastAccess();
       $formattedDate = $this->formatDate($lastAccess);
     } catch (Exception $e) {
-      $lastAccess = null;
+      $formattedDate = null;
     }
 
     $repository->createNewAccess($entityManager);
