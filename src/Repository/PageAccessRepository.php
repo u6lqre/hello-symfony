@@ -17,10 +17,11 @@ class PageAccessRepository extends ServiceEntityRepository
     public function getLastAccess(): ?PageAccess
     {
         return $this->createQueryBuilder('a')
+            ->select('a.last_access')
             ->orderBy('a.last_access', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getSingleScalarResult();
     }
 
     public function createNewAccess(EntityManagerInterface $entity_manager)
