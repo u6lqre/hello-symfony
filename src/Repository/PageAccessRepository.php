@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\PageAccess;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 class PageAccessRepository extends ServiceEntityRepository
@@ -20,5 +21,16 @@ class PageAccessRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function createNewAccess(EntityManagerInterface $entity_manager)
+    {
+        $page_access = new PageAccess();
+
+        $current_date = new \DateTime();
+        $page_access->setLastAccess($current_date);
+
+        $entity_manager->persist($page_access);
+        $entity_manager->flush();
     }
 }
