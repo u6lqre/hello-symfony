@@ -12,18 +12,18 @@ use Symfony\Component\Routing\Attribute\Route;
 class GreetingsController extends AbstractController
 {
   #[Route('/helloworld')]
-  public function show(PageAccessRepository $repository, EntityManagerInterface $entity_manager): Response
+  public function show(PageAccessRepository $repository, EntityManagerInterface $entityManager): Response
   {
     try {
-      $last_access = $repository->getLastAccess();
+      $lastAccess = $repository->getLastAccess();
     } catch (Exception $e) {
-      $last_access = null;
+      $lastAccess = null;
     }
 
-    $repository->createNewAccess($entity_manager);
+    $repository->createNewAccess($entityManager);
 
     return $this->render("greetings/show.html.twig", [
-      "last_access" => $last_access
+      "lastAccess" => $lastAccess
     ]);
   }
 }

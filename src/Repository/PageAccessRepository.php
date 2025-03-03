@@ -24,14 +24,14 @@ class PageAccessRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-    public function createNewAccess(EntityManagerInterface $entity_manager)
+    public function createNewAccess(EntityManagerInterface $entityManager)
     {
-        $page_access = new PageAccess();
+        $pageAccess = new PageAccess();
 
-        $date_time = new \DateTime();
-        $page_access->setLastAccess($date_time);
+        $dateTime = new \DateTime();
+        $pageAccess->setLastAccess($dateTime);
 
-        $entity_manager->persist($page_access);
-        $entity_manager->flush();
+        $entityManager->persist($pageAccess);
+        $entityManager->flush();
     }
 }
