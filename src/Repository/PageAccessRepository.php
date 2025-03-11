@@ -21,7 +21,7 @@ class PageAccessRepository extends ServiceEntityRepository
             ->orderBy('a.last_access', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
-            ->getSingleScalarResult();
+            ->getOneOrNullResult();
     }
 
     public function createNewAccess(EntityManagerInterface $entityManager)
