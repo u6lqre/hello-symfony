@@ -3,9 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\PageAccessRepository;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -15,12 +13,8 @@ class GreetingsController extends AbstractController
   #[Route('/helloworld')]
   public function show(PageAccessRepository $repository, EntityManagerInterface $entityManager): Response
   {
-    try {
-      $lastAccess = $repository->getLastAccess();
-      $formattedDate = $this->formatDate($lastAccess);
-    } catch (Exception $e) {
-      $formattedDate = null;
-    }
+    $lastAccess = $repository->getLastAccess();
+    $formattedDate = $this->formatDate($lastAccess['last_access']);
 
     $repository->createNewAccess($entityManager);
 
@@ -31,8 +25,6 @@ class GreetingsController extends AbstractController
 
   private function formatDate($lastAccess)
   {
-    $dateTime = new DateTime($lastAccess);
-
     $months = [
       "01" => "enero",
       "02" => "febrero",
@@ -49,10 +41,10 @@ class GreetingsController extends AbstractController
     ];
 
     return [
-      'year' => $dateTime->format('Y'),
-      'month' => $months[$dateTime->format('m')],
-      'day' => $dateTime->format('d'),
-      'hour' => $dateTime->format('H:i:s')
+      'year' => $lastAccess->format('Y'),
+      'month' => $months[$lastAccess->format('m')],
+      'day' => $lastAccess->format('d'),
+      'hour' => $lastAccess->format('H:i:s')
     ];
   }
 }
